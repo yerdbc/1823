@@ -4,7 +4,8 @@ let config ={
     email_host:'smtp.qq.com',
     email_port:465,
     email_user:'1737276713@qq.com',
-    email_pass:'xzkvsvuufpmbbbhe'
+    email_pass:'xzkvsvuufpmbbbhe',
+    loginTime:120
 }
 
 module.exports=config
