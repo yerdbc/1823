@@ -1,9 +1,9 @@
 const utils = require('../../util/util')
-const snackModel = require('../model/snackModel')
-let getSnack = (req,res)=>{
-    snackModel.find()
+const newsModel = require('../model/newsModel')
+let getNews = (req,res)=>{
+    newsModel.find()
     .then((data)=>{
-        // console.log(data)
+        console.log(data)
         utils.sendRes(res,0,'seleck ok',data)
     })
     .catch((err)=>{
@@ -12,10 +12,12 @@ let getSnack = (req,res)=>{
     })
 }
 
-let addSnack =(req,res)=>{
-    let {name,price,imgPath,desc,weight,brand}=req.body
-    snackModel.insertMany({name,price:Number(price),imgPath,desc,weight:Number(weight),brand})
+let addNews =(req,res)=>{
+    let updateTime = new Date();
+    let {title,content,origin,brand}=req.body
+    newsModel.insertMany({title,content,origin,updateTime,brand})
     .then((data)=>{
+
         utils.sendRes(res,0,'add ok',null)
     })
     .catch((err)=>{
@@ -24,9 +26,9 @@ let addSnack =(req,res)=>{
     })
 }
 
-let getSnackByBrand=(req,res)=>{
+let getNewsByBrand=(req,res)=>{
     let {brand}=req.body
-    snackModel.find({brand})
+    newsModel.find({brand})
     .then((data)=>{
         console.log(data)
         utils.sendRes(res,0,'select ok',data)
@@ -37,14 +39,14 @@ let getSnackByBrand=(req,res)=>{
     })
 }
 
-let getSnackByPage=(req,res)=>{
+let getNewsByPage=(req,res)=>{
     let page=req.body.page||1
     let pageSize=req.body.pageSize||2
     let result = {count:0,list:[]}
-    snackModel.find()
+    newsModel.find()
     .then((data)=>{
         result.count=data.length;
-        return snackModel.find().skip(Number((page-1)*pageSize)).limit(Number(pageSize))
+        return newsModel.find().skip(Number((page-1)*pageSize)).limit(Number(pageSize))
     })
     .then((data)=>{
         console.log(data)
@@ -57,9 +59,9 @@ let getSnackByPage=(req,res)=>{
     })
 }
 
-let getSnackById=(req,res)=>{
+let getNewsById=(req,res)=>{
     let{_id}=req.body
-    snackModel.find({_id})
+    newsModel.find({_id})
     .then((data)=>{
         utils.log(data)
         utils.sendRes(res,0,'select ok',data)
@@ -70,10 +72,10 @@ let getSnackById=(req,res)=>{
     })
 }
 
-let getSnackByKw=(req,res)=>{
+let getNewsByKw=(req,res)=>{
     let {keyword}=req.body
     let reg=new RegExp(keyword)
-    snackModel.find({$or:[{name:{$regex:reg}},{desc:{$regex:reg}}]})
+    newsModel.find({$or:[{title:{$regex:reg}},{content:{$regex:reg}}]})
     .then((data)=>{
         console.log(data)
         utils.sendRes(res,0,'select ok',data)
@@ -84,10 +86,10 @@ let getSnackByKw=(req,res)=>{
     })
 }
 
-let updateSnack=(req,res)=>{
+let updateNews=(req,res)=>{
     let _id=req.body._id
-    let {name,price,imgPath,desc,weight,brand}=req.body
-    snackModel.updateOne({_id:_id},{name,price,imgPath,desc,weight,brand})
+    let {title,content,origin,updatetime,brand}=req.body
+    newsModel.updateOne({_id:_id},{title,content,origin,updatetime,brand})
     .then((data)=>{
         console.log(data)
         utils.sendRes(res,0,'update ok',null)
@@ -98,9 +100,9 @@ let updateSnack=(req,res)=>{
     })
 }
 
-let delSnack=(req,res)=>{
+let delNews=(req,res)=>{
     let _id=req.body._id
-    snackModel.remove({_id:_id})
+    newsModel.remove({_id:_id})
     .then((data)=>{
         utils.log(data)
         utils.sendRes(res,0,'del ok',null)
@@ -112,5 +114,5 @@ let delSnack=(req,res)=>{
 }
 
 module.exports={
-    getSnack,addSnack,getSnackByBrand,getSnackByPage,getSnackById,getSnackByKw,updateSnack,delSnack
+    getNews,addNews,getNewsByBrand,getNewsByPage,getNewsById,getNewsByKw,updateNews,delNews
 }
