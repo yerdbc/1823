@@ -5,18 +5,20 @@ const utils = require('../util/util.js')
 const mail = require('../module/mail.js')
 router.post('/getMailCode', (req, res) => {
     let code = yzm();
-    let email = query.email;
-    mail.send(email, code, (err) => {
-        if (err) {
-            res.end(err)
-        } else {
-            res.end('发送ok')
-        }
+    let email = req.body.email;
+    mail.send(email, code)
+    .then((data)=>{
+        utils.sendRes(res,0,'验证码ok',null)
+
+    })
+    .catch((err)=>{
+        utils.log(err)
+        utils.sendRes(res,-1,'验证码失败',null)
     })
     function yzm() {
         let codeArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
         let length = 6;
-        code = "";
+        let code = "";
         for (let i = 0; i < length; i++) {
             let randomI = Math.floor(Math.random() * 10);
             code += codeArr[randomI];
@@ -28,9 +30,11 @@ router.post('/getMailCode', (req, res) => {
 router.post('/reg', (req, res) => {
     let {
         name,
-        pass
+        pass,
+        code
     } = req.body;
-    userModel.insertMany({
+    if (yzm===code) {
+        userModel.insertMany({
             name: name,
             pass: pass
         })
@@ -41,6 +45,9 @@ router.post('/reg', (req, res) => {
             utils.log(err);
             utils.sendRes(res, -1, "注册失败", null)
         })
+    }else{
+        utils.sendRes(res, -1, "验证码错误", null)
+    }
 })
 
 module.exports = router
