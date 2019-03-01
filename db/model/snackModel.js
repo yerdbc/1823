@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-let UserSchema = new mongoose.Schema({
+let snackSchema = new mongoose.Schema({
     name:{type:String,required:true},
     price:{type:Number,required:true},
     imgPath:{type:String,required:true},
@@ -8,5 +8,5 @@ let UserSchema = new mongoose.Schema({
     brand:{type:String,required:true}
 })
 
-let list = mongoose.model('snack',UserSchema);
+let list = mongoose.model('snack',snackSchema);
 module.exports=list
