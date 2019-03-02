@@ -232,7 +232,7 @@
 
 		$.ajax({
 			async: true,
-			url: "http://10.9.62.146:3000/admin/snack/getSnack",
+			url: "http://10.9.62.145:3000/admin/snack/getSnack",
 			type: 'post', //请求的方式
 			data: {}, //请求的数据
 			success: function (backdata) { //请求成功后返回的数据会封装在回调函数的第一个参数中
@@ -248,16 +248,13 @@
 		})
 
 		function getSnack(backdata) {
-			// console.log(backdata);
+			console.log(backdata);
 			let data = backdata.data;
 			var snackL = "";
 			var totalM = data.length;
 			$('#totalM').html(totalM)
-			
-
 			for (let index = 0; index < data.length; index++) {
 				// var msg = 
-				
 				snackL +=
 					`<tr class="text-c">
 						<td><input name="" type="checkbox" value=""></td>
