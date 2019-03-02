@@ -75,7 +75,7 @@
 		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button onclick="addSnack()" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+				<button onclick="addBanner()" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
 				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 			</div>
 		</div>
@@ -102,8 +102,7 @@ function article_save(){
 }
 
 
-
-function addSnack() {
+function addBanner() {
     // alert("刷新父级的时候会自动关闭弹层。")
     // 
     //添加新的食品信息
@@ -115,7 +114,7 @@ function addSnack() {
         brand: $('#brand').val(),
         weight: $('#weight').val()
     }
-    $.post(OL_Action_Root + '/admin/snack/addSnack', data, (res) => {
+    $.post(OL_Action_Root + '/admin/banner/addBanner', data, (res) => {
         if (res.err === 0) {
             //关闭当前页面
             // layer_close()
@@ -127,9 +126,9 @@ function addSnack() {
     })
 }
 
+
 let OL_Action_Root = 'http://10.9.62.146:3000'
 let imgPath = ''
-
 function addPicture() {
 
     let file = $("#filewrap")[0].files[0] //在文件域中选中的图片

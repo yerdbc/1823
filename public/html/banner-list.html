@@ -75,7 +75,7 @@
                 搜零食</button>
         </div>
         <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i
-                        class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary  radius" onclick="picture_add('添加图片','picture-add.html')"
+                        class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary  radius" onclick="picture_add('添加图片','banner-add.html')"
                     href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加产品</a></span> <span class="r">共有数据：<strong
                     id="totalM"></strong>
                 条</span> </div>
@@ -196,7 +196,7 @@
             console.log(keyword)
             $.ajax({
                 async: true,
-                url: "http://10.9.62.146:3000/admin/snack/getSnackByKw",
+                url: "http://10.9.62.146:3000/admin/banner/getBannerByKw",
                 type: 'post', //请求的方式
                 data: {
                     keyword,
@@ -214,7 +214,7 @@
                     $('#totalM').html(count)
                     $('#pages').html(Math.ceil(count / pageSize))
                     // 获取分页过之后的数据信息
-                    getSnack(res.data.data)
+                    getBanner(res.data.data)
                     
                 },
                 error: function (err) { //响应不成功时返回的函数
@@ -228,7 +228,7 @@
         // 初始化首页数据
         jumpPage('start')
 
-        function getSnack(data) {
+        function getBanner(data) {
             var snackL = "";
             for (let index = 0; index < data.length; index++) {
 
@@ -373,7 +373,7 @@
                 console.log(id);
                 $.ajax({
                     type: 'POST',
-                    url: 'http://10.9.62.146:3000/admin/snack/delSnack',
+                    url: 'http://10.9.62.146:3000/admin/banner/delBanner',
                     data: {
                         _id: id
                     },
@@ -423,7 +423,7 @@
             for (let i = 0; i < arr.length; i++) {
                 $.ajax({
                     type: 'POST',
-                    url: 'http://10.9.62.146:3000/admin/snack/delSnack',
+                    url: 'http://10.9.62.146:3000/admin/banner/delBanner',
                     data: {
                         _id: arr[i]
                     },
