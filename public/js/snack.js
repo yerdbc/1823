@@ -3,7 +3,7 @@ function sounima() {
     console.log(keyword)
     $.ajax({
         async: true,
-        url: "http://10.9.62.146:3000/admin/snack/getSnackByKw",
+        url: "http://10.9.62.145:3000/admin/snack/getSnackByKw",
         type: 'post', //请求的方式
         data: {
             keyword
@@ -44,7 +44,7 @@ function getSnackByKw(backdata) {
                 <td><input name="" type="checkbox" value=""></td>
                 <td>${data[index].name}</td>
                 <td>${data[index].brand}</td>
-                <td><a href="javascript:;"><img src="http://10.9.62.146:3000${data[index].imgPath}" width="100" class="picture-thumb"
+                <td><a href="javascript:;"><img src="http://10.9.62.145:3000${data[index].imgPath}" width="100" class="picture-thumb"
                          ></a></td>
                 <td class="text-l">${data[index].desc}</td>
                 <td class="text-c">${data[index].weight}g</td>
@@ -67,7 +67,7 @@ function getSnackByKw(backdata) {
     $('#tbody').html(snackL)
 }
 
-let OL_Action_Root = 'http://10.9.62.146:3000'
+let OL_Action_Root = 'http://10.9.62.145:3000'
 let imgPath = ''
 
 function addSnack() {
