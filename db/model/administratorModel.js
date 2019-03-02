@@ -10,8 +10,12 @@ let AdminUserSchema = new mongoose.Schema({
     },
     token: {
         type: String
+    },
+    qx:{
+        type:String ,
+        default:1
     }
 });
 
-let adminUser = mongoose.model('user', AdminUserSchema);
+let adminUser = mongoose.model('adminUser', AdminUserSchema);
 module.exports = adminUser

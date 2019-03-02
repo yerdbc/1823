@@ -98,11 +98,19 @@ let login = (req, res) => {
         .then((data) => {
             if (!(data.toString(String))) {
                 utils.sendRes(res, -1, '查无此人', null)
-            }else{
+            } else {
                 if (pass == data[0].pass) {
-                    let token=jsonwebToken.creatToken({id:data[0]._id})
-                    userModel.update({"name":name},{"token":token})
-                    utils.sendRes(res, 0, '登陆成功', {token})
+                    let token = jsonwebToken.creatToken({
+                        id: data[0]._id
+                    })
+                    userModel.update({
+                        "name": name
+                    }, {
+                        "token": token
+                    })
+                    utils.sendRes(res, 0, '登陆成功', {
+                        token
+                    })
                 } else {
                     utils.sendRes(res, -1, '密码错误', null)
                 }
@@ -113,29 +121,37 @@ let login = (req, res) => {
             utils.sendRes(res, -22, '错误', null)
         })
 }
-let getUser = (req,res)=>{
+let getUser = (req, res) => {
     userModel.find()
-    .then((data)=>{
-        utils.log(data);
-        utils.sendRes(res,0,"ok",null)
-    })
-    .catch((err)=>{
-        utils.log(err)
-        utils.sendRes(res,-1,err._message,null)
-    })
+        .then((data) => {
+            utils.log(data);
+            utils.sendRes(res, 0, "ok", null)
+        })
+        .catch((err) => {
+            utils.log(err)
+            utils.sendRes(res, -1, err._message, null)
+        })
 }
-let getUserId =(req,res)=>{
-    let {_id} = req.body;
-    userModel.findById({_id})
-    .then((data)=>{
-        utils.log(data);
-        utils.sendRes(res,0,"ok",null)
-    })
-    .catch((err)=>{
-        utils.log(err)
-        utils.sendRes(res,-1,err._message,null)
-    })
+let getUserId = (req, res) => {
+    let {
+        _id
+    } = req.body;
+    userModel.findById({
+            _id
+        })
+        .then((data) => {
+            utils.log(data);
+            utils.sendRes(res, 0, "ok", null)
+        })
+        .catch((err) => {
+            utils.log(err)
+            utils.sendRes(res, -1, err._message, null)
+        })
 }
-module.exports={
-    getMailCode,reg,login,getUser,getUserId
+module.exports = {
+    getMailCode,
+    reg,
+    login,
+    getUser,
+    getUserId
 }
