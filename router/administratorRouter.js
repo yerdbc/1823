@@ -5,4 +5,5 @@ router.post('/login', administratorController.login)
 router.post('/getUser',administratorController.getUser)
 router.post('/getUserId',administratorController.getUserId)
 router.post('/addUser',administratorController.addUser)
+router.post('/getUserByKw',administratorController.getUserByKw)
 module.exports = router

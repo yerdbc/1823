@@ -124,8 +124,8 @@ let login = (req, res) => {
 let getUser = (req, res) => {
     userModel.find()
         .then((data) => {
-            utils.log(data);
-            utils.sendRes(res, 0, "ok", null)
+            console.log(data);
+            utils.sendRes(res, 0, "ok", data)
         })
         .catch((err) => {
             utils.log(err)
@@ -148,10 +148,25 @@ let getUserId = (req, res) => {
             utils.sendRes(res, -1, err._message, null)
         })
 }
+
+let getUserByKw=(req,res)=>{
+    let {keyword}=req.body
+    let reg=new RegExp(keyword)
+    userModel.find({name:{$regex:reg}})
+    .then((data)=>{
+        console.log(data)
+        utils.sendRes(res,0,'select ok',data)
+    })
+    .catch((err)=>{
+        utils.log(err)
+        utils.sendRes(res,-1,err._message,null)
+    })
+}
 module.exports = {
     getMailCode,
     reg,
     login,
     getUser,
-    getUserId
+    getUserId,
+    getUserByKw
 }
