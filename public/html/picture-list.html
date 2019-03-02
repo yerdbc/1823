@@ -2,273 +2,244 @@
 <html>
 
 <head>
-	<style>
-		#DataTables_Table_0_paginate {
-			float: right;
-			padding-top: 50px;
-			text-align: right;
-		}
+    <style>
+        #DataTables_Table_0_paginate {
+            float: right;
+            padding-top: 50px;
+            text-align: right;
+        }
 
-		.paginate_button {
-			background: #fff;
-			color: rgb(0, 0, 0);
-			border: 1px solid #ccc;
-			cursor: pointer;
-			display: inline-block;
-			margin-left: 2px;
-			text-align: center;
-			text-decoration: none;
-			height: 26px;
-			line-height: 26px;
-			margin: 0 0 6px 6px;
-			padding: 0 10px;
-			font-size: 14px;
+        .paginate_button {
+            background: #fff;
+            color: rgb(0, 0, 0);
+            border: 1px solid #ccc;
+            cursor: pointer;
+            display: inline-block;
+            margin-left: 2px;
+            text-align: center;
+            text-decoration: none;
+            height: 26px;
+            line-height: 26px;
+            margin: 0 0 6px 6px;
+            padding: 0 10px;
+            font-size: 14px;
 
-		}
+        }
 
-		.paginate_button:hover {
-			background: #5a98de;
-			color: #fff;
-			text-decoration: none;
-		}
-	</style>
-	<meta charset="utf-8">
-	<meta name="renderer" content="webkit|ie-comp|ie-stand">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-	<meta http-equiv="Cache-Control" content="no-siteapp" />
-	<!--[if lt IE 9]>
+        .paginate_button:hover {
+            background: #5a98de;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .pageGGshuru {
+            width: 26px;
+            height: 24px;
+            border: 1px solid #ededed;
+            line-height: 24px;
+            text-align: center;
+            margin: 0px 4px;
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
 <script type="text/javascript" src="lib/html5shiv.js"></script>
 <script type="text/javascript" src="lib/respond.min.js"></script>
 <![endif]-->
-	<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
-	<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
-	<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
-	<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-	<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
-	<!--[if IE 6]>
+    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+    <!--[if IE 6]>
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-	<title>图片列表</title>
+    <title>图片列表</title>
 </head>
 
 <body>
-	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 零食管理 <span class="c-gray en">&gt;</span>
-		零食列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);"
-		 title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
-	<div class="page-container">
-		<div class="text-c">
-			<input type="text" name="" id="soulingshi" placeholder=" 零食名称" style="width:250px" class="input-text">
-			<button name="" id="sounima" class="btn btn-success" onclick="sounima()" type="submit"><i class="Hui-iconfont">&#xe665;</i>
-				搜零食</button>
-		</div>
-		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i
-					 class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary  radius" onclick="picture_add('添加图片','picture-add.html')"
-				 href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加产品</a></span> <span class="r">共有数据：<strong id="totalM"></strong>
-				条</span> </div>
-		<div class="mt-20">
-			<table class="table table-border table-bordered table-bg table-hover table-sort">
-				<thead>
-					<tr class="text-c">
-						<th width="40"><input name="" type="checkbox" value=""></th>
-						<th width="80">名称</th>
-						<th width="100">品牌</th>
-						<th width="200">封面</th>
-						<th width="150">描述</th>
-						<th width="80">质量</th>
-						<th width="80">单价</th>
-						<th width="60">发布状态</th>
-						<th width="100">操作</th>
-					</tr>
-				</thead>
-				<tbody id='tbody'>
 
-				</tbody>
-			</table>
-			<label>显示 <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" style="width:100px;margin-top: 50px"
-				 class="select">
-					<option value="10">2</option>
-					<option value="25">5</option>
-					<option value="50">10</option>
-				</select> 条</label>
-			<div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><a class="paginate_button previous disabled"
-				 aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" id="DataTables_Table_0_previous">上一页</a><span><a
-					 class="paginate_button current" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a></span><a
-				 class="paginate_button next disabled" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" id="DataTables_Table_0_next">下一页</a></div>
-		</div>
-	</div>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 零食管理 <span
+            class="c-gray en">&gt;</span>
+        零食列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);"
+            title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <div class="text-c">
+            <input type="text" name="" id="soulingshi" placeholder=" 零食名称" style="width:250px" class="input-text">
+            <button name="" id="sounima" class="btn btn-success" onclick="jumpPage('start')" type="submit"><i class="Hui-iconfont">&#xe665;</i>
+                搜零食</button>
+        </div>
+        <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i
+                        class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary  radius" onclick="picture_add('添加图片','picture-add.html')"
+                    href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加产品</a></span> <span class="r">共有数据：<strong
+                    id="totalM"></strong>
+                条</span> </div>
+        <div class="mt-20">
+            <table class="table table-border table-bordered table-bg table-hover table-sort">
+                <thead>
+                    <tr class="text-c">
+                        <th width="40"><input name="" type="checkbox" value=""></th>
+                        <th width="80">名称</th>
+                        <th width="100">品牌</th>
+                        <th width="200">封面</th>
+                        <th width="150">描述</th>
+                        <th width="80">质量</th>
+                        <th width="80">单价</th>
+                        <th width="60">发布状态</th>
+                        <th width="100">操作</th>
+                    </tr>
+                </thead>
+                <tbody id='tbody'>
 
-	<!--_footer 作为公共模版分离出去-->
-	<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
-	<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
-	<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
-	<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script>
-	<script type="text/javascript" src="../js/snack.js"></script>
-	<!--/_footer 作为公共模版分离出去-->
+                </tbody>
+            </table>
+            <label>每页显示
+                <select name="DataTables_Table_0_length" onchange="change_pagesize()" aria-controls="DataTables_Table_0"
+                    style="width:50px;margin-top: 50px" id="change_pagesize" class="select">
+                    <option value="2">2</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                </select> 条
+            </label>/<span>共 <span id="pages"></span> 页</span>
+            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                <input type="button" onclick="jumpPage('start')" class="paginate_button next disabled" value="首页" />
+                <a class="paginate_button previous disabled" onclick="jumpPage('prev')" aria-controls="DataTables_Table_0"
+                    data-dt-idx="0" tabindex="0" id="DataTables_Table_0_previous">上一页</a>
+                <span>
+                    <a class="paginate_button current" id="show_page" aria-controls="DataTables_Table_0" data-dt-idx="1"
+                        tabindex="0">1</a>
+                </span>
+                <a class="paginate_button next disabled" onclick="jumpPage('next')" aria-controls="DataTables_Table_0"
+                    data-dt-idx="2" tabindex="0" id="DataTables_Table_0_next">下一页</a>
+                <strong>到第</strong>
+                <input type="text" class="pageGGshuru" id='jumppage' value="1">
+                <strong>页</strong>
+                <input type="button" onclick="jumpPage('jump')" class="paginate_button next disabled" value="跳转" />
+                <input type="button" onclick="jumpPage('end')" class="paginate_button next disabled" value="尾页" />
+            </div>
+        </div>
+    </div>
 
-	<!--请在下方写此页面业务相关的脚本-->
-	<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
-	<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
-	<script type="text/javascript">
-		/*图片-添加*/
-		function picture_add(title, url) {
-			var index = layer.open({
-				type: 2,
-				title: title,
-				content: url
-			});
-			layer.full(index);
-		}
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript" src="../js/snack.js"></script>
+    <!--/_footer 作为公共模版分离出去-->
 
-		/*图片-查看*/
-		function picture_show(title, url, id) {
-			var index = layer.open({
-				type: 2,
-				title: title,
-				content: url
-			});
-			layer.full(index);
-		}
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript">
+        let rootpath = 'http://10.9.62.145:3000'
+        let pageSize = 2
+        let page = 1
+        let count = 0 //数据总数
+        let nowPage = 1 //当前页
 
-		/*图片-审核*/
-		function picture_shenhe(obj, id) {
-			layer.confirm('审核文章？', {
-					btn: ['通过', '不通过'],
-					shade: false
-				},
-				function () {
-					$(obj).parents("tr").find(".td-manage").prepend(
-						'<a class="c-primary" onClick="picture_start(this,id)" href="javascript:;" title="申请上线">申请上线</a>');
-					$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
-					$(obj).remove();
-					layer.msg('已发布', {
-						icon: 6,
-						time: 1000
-					});
-				},
-				function () {
-					$(obj).parents("tr").find(".td-manage").prepend(
-						'<a class="c-primary" onClick="picture_shenqing(this,id)" href="javascript:;" title="申请上线">申请上线</a>');
-					$(obj).parents("tr").find(".td-status").html('<span class="label label-danger radius">未通过</span>');
-					$(obj).remove();
-					layer.msg('未通过', {
-						icon: 5,
-						time: 1000
-					});
-				});
-		}
+        function change_pagesize() {
+            pageSize = $('#change_pagesize').val()
+            jumpPage('start')
+        }
 
-		/*图片-下架*/
-		function picture_stop(obj, id) {
-			layer.confirm('确认要下架吗？', function (index) {
-				$(obj).parents("tr").find(".td-manage").prepend(
-					'<a style="text-decoration:none" onClick="picture_start(this,id)" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>'
-				);
-				$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已下架</span>');
-				$(obj).remove();
-				layer.msg('已下架!', {
-					icon: 5,
-					time: 1000
-				});
-			});
-		}
+        function jumpPage(type) {
+            switch (type) {
+                case 'start':
+                    // 首页
+                    page = 1
+                    break;
+                case 'end':
+                    // 尾页
+                    page = Math.ceil(count / pageSize)
+                    break;
+                case 'next':
+                    page = nowPage + 1
+                    if (page > Math.ceil(count / pageSize)) {
+                        page = Math.ceil(count / pageSize)
+                        alert('已达到最后一页')
+                    }
+                    break;
+                case 'prev':
+                    page = nowPage - 1
+                    if (page <= 0) {
+                        page = 1
+                        alert('已达到第一页')
+                    }
+                    break;
+                case 'jump':
+                    page = $('#jumppage').val()
+                    if (page<=0) {
+                        page = 1
+                        $('#jumppage').val(1)
+                        alert('页码错误，已跳到第一页')
+                    }else if(page > Math.ceil(count / pageSize)){
+                        page = Math.ceil(count / pageSize)
+                        $('#jumppage').val(page)
+                        alert('页码超出，已跳到最后一页')
+                    }else{
+                        page = page
+                    }
+                    break;
+            }
+            $('#show_page').html(page)
+            sounima()
+        }
 
-		/*图片-发布*/
-		function picture_start(obj, id) {
-			layer.confirm('确认要发布吗？', function (index) {
-				$(obj).parents("tr").find(".td-manage").prepend(
-					'<a style="text-decoration:none" onClick="picture_stop(this,id)" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>'
-				);
-				$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
-				$(obj).remove();
-				layer.msg('已发布!', {
-					icon: 6,
-					time: 1000
-				});
-			});
-		}
+        function sounima() {
+            let keyword = $('#soulingshi').val();
+            console.log(keyword)
+            $.ajax({
+                async: true,
+                url: "http://10.9.62.145:3000/admin/snack/getSnackByKw",
+                type: 'post', //请求的方式
+                data: {
+                    keyword,
+                    page,
+                    pageSize
+                }, //请求的数据
+                success: function (res) { //请求成功后返回的数据会封装在回调函数的第一个参数中
+                    //通过backdata来获取所需要的数据
+                    if (res.err !== 0) {
+                        return false
+                    }
+                    // console.log(res)
+                    nowPage = page //数据请求成功后更新当前页
+                    count = res.data.result.count
+                    $('#totalM').html(count)
+                    $('#pages').html(Math.ceil(count / pageSize))
+                    // 获取分页过之后的数据信息
+                    getSnack(res.data.data)
+                    
+                },
+                error: function (err) { //响应不成功时返回的函数
+                    console.log('请求失败！')
+                    console.log(err);
 
-		/*图片-申请上线*/
-		function picture_shenqing(obj, id) {
-			$(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">待审核</span>');
-			$(obj).parents("tr").find(".td-manage").html("");
-			layer.msg('已提交申请，耐心等待审核!', {
-				icon: 1,
-				time: 2000
-			});
-		}
+                },
+                dataType: 'json' //设置返回的数据类型
+            })
+        }
+        // 初始化首页数据
+        jumpPage('start')
 
-		/*图片-编辑*/
-		function picture_edit(title, url, id) {
-			var index = layer.open({
-				type: 2,
-				title: title,
-				content: url
-			});
-			layer.full(index);
-		}
+        function getSnack(data) {
+            var snackL = "";
+            for (let index = 0; index < data.length; index++) {
 
-		/*图片-删除*/
-		function picture_del(obj, id) {
-			layer.confirm('确认要删除吗？', function (index) {
-				console.log(id);
-				$.ajax({
-					type: 'POST',
-					url: 'http://10.9.62.146:3000/admin/snack/delSnack',
-					data: {
-						_id: id
-					},
-					dataType: 'json',
-					success: function (data) {
-						$(obj).parents("tr").remove();
-						layer.msg('已删除!', {
-							icon: 1,
-							time: 1000
-						});
-					},
-					error: function (data) {
-						console.log(data.msg);
-					},
-				});
-			});
-		}
+                snackL +=
+                    `<tr class="text-c">
 
-		$.ajax({
-			async: true,
-			url: "http://10.9.62.146:3000/admin/snack/getSnack",
-			type: 'post', //请求的方式
-			data: {}, //请求的数据
-			success: function (backdata) { //请求成功后返回的数据会封装在回调函数的第一个参数中
-				//通过backdata来获取所需要的数据
-				getSnack(backdata)
-			},
-			error: function (err) { //响应不成功时返回的函数
-				console.log('请求失败！')
-				console.log(err);
-
-			},
-			dataType: 'json' //设置返回的数据类型
-		})
-
-		function getSnack(backdata) {
-			console.log(backdata);
-			let data = backdata.data;
-
-			var snackL = "";
-			var totalM = data.length;
-			$('#totalM').html(totalM)
-
-			for (let index = 0; index < data.length; index++) {
-				// var msg = 
-
-				snackL +=
-					`<tr class="text-c">
 						<td><input name="" type="checkbox" onclick="choseToDel('${data[index]._id}')" value=""></td>
 						<td>${data[index].name}</td>
 						<td>${data[index].brand}</td>
-						<td><a href="javascript:;" ><img src="http://10.9.62.146:3000${data[index].imgPath}" width="100" class="picture-thumb"
+						<td><a href="javascript:;" ><img src="http://10.9.62.145:3000${data[index].imgPath}" width="100" class="picture-thumb"
 								 ></a></td>
 						<td class="text-l" >${data[index].desc}</td>
 						<td class="text-c">${data[index].weight}g</td>
@@ -282,62 +253,198 @@
 							 title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
 							 
 							 <a style="text-decoration:none" class="ml-5"
-							 onClick="picture_del(this,'${data[index]._id}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                             onClick="picture_del(this,'${data[index]._id}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                             
 						</td>
 					</tr>`
-			}
+            }
 
-			// var dataContent=document.getElementById('dataContent');
-			$('#tbody').html(snackL)
-		}
-
-
-		function picture_edit(title, url, id) {
-			localStorage.setItem('_id', id)
-			//将id 存入localstorage  目的是跨页面传参
-			var index = layer.open({
-				type: 2,
-				title: title,
-				content: url
-			});
-			layer.full(index);
-		}
+            // var dataContent=document.getElementById('dataContent');
+            $('#tbody').html(snackL)
+        }
 
 
-		var arr=[];
-		function choseToDel(id) {
-			arr.push(id);
-			console.log(arr)
-			// localStorage.setItem('all_id', id)
-			//将id 存入localstorage  目的是跨页面传参
-		}
+        /*图片-添加*/
+        function picture_add(title, url) {
+            var index = layer.open({
+                type: 2,
+                title: title,
+                content: url
+            });
+            layer.full(index);
+        }
+
+        /*图片-查看*/
+        function picture_show(title, url, id) {
+            var index = layer.open({
+                type: 2,
+                title: title,
+                content: url
+            });
+            layer.full(index);
+        }
+
+        /*图片-审核*/
+        function picture_shenhe(obj, id) {
+            layer.confirm('审核文章？', {
+                    btn: ['通过', '不通过'],
+                    shade: false
+                },
+                function () {
+                    $(obj).parents("tr").find(".td-manage").prepend(
+                        '<a class="c-primary" onClick="picture_start(this,id)" href="javascript:;" title="申请上线">申请上线</a>'
+                    );
+                    $(obj).parents("tr").find(".td-status").html(
+                        '<span class="label label-success radius">已发布</span>');
+                    $(obj).remove();
+                    layer.msg('已发布', {
+                        icon: 6,
+                        time: 1000
+                    });
+                },
+                function () {
+                    $(obj).parents("tr").find(".td-manage").prepend(
+                        '<a class="c-primary" onClick="picture_shenqing(this,id)" href="javascript:;" title="申请上线">申请上线</a>'
+                    );
+                    $(obj).parents("tr").find(".td-status").html(
+                        '<span class="label label-danger radius">未通过</span>');
+                    $(obj).remove();
+                    layer.msg('未通过', {
+                        icon: 5,
+                        time: 1000
+                    });
+                });
+        }
+
+        /*图片-下架*/
+        function picture_stop(obj, id) {
+            layer.confirm('确认要下架吗？', function (index) {
+                $(obj).parents("tr").find(".td-manage").prepend(
+                    '<a style="text-decoration:none" onClick="picture_start(this,id)" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>'
+                );
+                $(obj).parents("tr").find(".td-status").html(
+                    '<span class="label label-defaunt radius">已下架</span>');
+                $(obj).remove();
+                layer.msg('已下架!', {
+                    icon: 5,
+                    time: 1000
+                });
+            });
+        }
+
+        /*图片-发布*/
+        function picture_start(obj, id) {
+            layer.confirm('确认要发布吗？', function (index) {
+                $(obj).parents("tr").find(".td-manage").prepend(
+                    '<a style="text-decoration:none" onClick="picture_stop(this,id)" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>'
+                );
+                $(obj).parents("tr").find(".td-status").html(
+                    '<span class="label label-success radius">已发布</span>');
+                $(obj).remove();
+                layer.msg('已发布!', {
+                    icon: 6,
+                    time: 1000
+                });
+            });
+        }
+
+        /*图片-申请上线*/
+        function picture_shenqing(obj, id) {
+            $(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">待审核</span>');
+            $(obj).parents("tr").find(".td-manage").html("");
+            layer.msg('已提交申请，耐心等待审核!', {
+                icon: 1,
+                time: 2000
+            });
+        }
+
+        /*图片-编辑*/
+        function picture_edit(title, url, id) {
+            var index = layer.open({
+                type: 2,
+                title: title,
+                content: url
+            });
+            layer.full(index);
+        }
+
+        /*图片-删除*/
+        function picture_del(obj, id) {
+            layer.confirm('确认要删除吗？', function (index) {
+                console.log(id);
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://10.9.62.145:3000/admin/snack/delSnack',
+                    data: {
+                        _id: id
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!', {
+                            icon: 1,
+                            time: 1000
+                        });
+                    },
+                    error: function (data) {
+                        console.log(data.msg);
+                    },
+                });
+            });
+        }
 
 
-		function datadel(obj,id) {
-			for(let i=0;i<arr.length;i++){
-				$.ajax({
-				type: 'POST',
-				url: 'http://10.9.62.146:3000/admin/snack/delSnack',
-				data: {
-					_id: arr[i]
-				},
-				dataType: 'json',
-				success: function (data) {
-					$(obj).parents("tr").remove();
-					layer.msg('已删除!', {
-						icon: 1,
-						time: 1000
-					});
-				},
-				error: function (data) {
-					console.log(data.msg);
-				},
-			});	
-				}
-				window.location.reload();
-			
-		}
-	</script>
+
+
+
+
+        function picture_edit(title, url, id) {
+            localStorage.setItem('_id', id)
+            //将id 存入localstorage  目的是跨页面传参
+            var index = layer.open({
+                type: 2,
+                title: title,
+                content: url
+            });
+            layer.full(index);
+        }
+
+
+        var arr = [];
+
+        function choseToDel(id) {
+            arr.push(id);
+            console.log(arr)
+            // localStorage.setItem('all_id', id)
+            //将id 存入localstorage  目的是跨页面传参
+        }
+
+
+        function datadel(obj, id) {
+            for (let i = 0; i < arr.length; i++) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://10.9.62.145:3000/admin/snack/delSnack',
+                    data: {
+                        _id: arr[i]
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!', {
+                            icon: 1,
+                            time: 1000
+                        });
+                    },
+                    error: function (data) {
+                        console.log(data.msg);
+                    },
+                });
+            }
+            window.location.reload();
+
+        }
+    </script>
 </body>
 
 </html>
