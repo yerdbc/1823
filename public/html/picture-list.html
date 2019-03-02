@@ -70,7 +70,7 @@
     <div class="page-container">
         <div class="text-c">
             <input type="text" name="" id="soulingshi" placeholder=" 零食名称" style="width:250px" class="input-text">
-            <button name="" id="sounima" class="btn btn-success" onclick="sounima()" type="submit"><i class="Hui-iconfont">&#xe665;</i>
+            <button name="" id="sounima" class="btn btn-success" onclick="jumpPage('start')" type="submit"><i class="Hui-iconfont">&#xe665;</i>
                 搜零食</button>
         </div>
         <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i
@@ -97,13 +97,14 @@
 
                 </tbody>
             </table>
-            <label>显示 
-                <select name="DataTables_Table_0_length" onchange="change_pagesize()" aria-controls="DataTables_Table_0" style="width:50px;margin-top: 50px" id="change_pagesize"
-                    class="select">
+            <label>每页显示
+                <select name="DataTables_Table_0_length" onchange="change_pagesize()" aria-controls="DataTables_Table_0"
+                    style="width:50px;margin-top: 50px" id="change_pagesize" class="select">
                     <option value="2">2</option>
                     <option value="5">5</option>
                     <option value="10">10</option>
-                </select> 条</label>
+                </select> 条
+            </label>/<span>共 <span id="pages"></span> 页</span>
             <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
                 <input type="button" onclick="jumpPage('start')" class="paginate_button next disabled" value="首页" />
                 <a class="paginate_button previous disabled" onclick="jumpPage('prev')" aria-controls="DataTables_Table_0"
@@ -173,24 +174,55 @@
                     break;
                 case 'jump':
                     page = $('#jumppage').val()
+                    if (page<=0) {
+                        page = 1
+                        $('#jumppage').val(1)
+                        alert('页码错误，已跳到第一页')
+                    }else if(page > Math.ceil(count / pageSize)){
+                        page = Math.ceil(count / pageSize)
+                        $('#jumppage').val(page)
+                        alert('页码超出，已跳到最后一页')
+                    }else{
+                        page = page
+                    }
                     break;
             }
-
-            
             $('#show_page').html(page)
-            $.post(rootpath + '/admin/snack/getSnackByPage', {
-                page,
-                pageSize
-            }, function (res) {
-                if (res.err !== 0) {
-                    return false
-                }
-                // console.log(res)
-                nowPage = page //数据请求成功后更新当前页
-                count = res.data.count
-                $('#totalM').html(count)
-                // 获取分页过之后的数据信息
-                getSnack(res.data.lists)
+            sounima()
+        }
+
+        function sounima() {
+            let keyword = $('#soulingshi').val();
+            console.log(keyword)
+            $.ajax({
+                async: true,
+                url: "http://10.9.62.145:3000/admin/snack/getSnackByKw",
+                type: 'post', //请求的方式
+                data: {
+                    keyword,
+                    page,
+                    pageSize
+                }, //请求的数据
+                success: function (res) { //请求成功后返回的数据会封装在回调函数的第一个参数中
+                    //通过backdata来获取所需要的数据
+                    if (res.err !== 0) {
+                        return false
+                    }
+                    // console.log(res)
+                    nowPage = page //数据请求成功后更新当前页
+                    count = res.data.result.count
+                    $('#totalM').html(count)
+                    $('#pages').html(Math.ceil(count / pageSize))
+                    // 获取分页过之后的数据信息
+                    getSnack(res.data.data)
+                    
+                },
+                error: function (err) { //响应不成功时返回的函数
+                    console.log('请求失败！')
+                    console.log(err);
+
+                },
+                dataType: 'json' //设置返回的数据类型
             })
         }
         // 初始化首页数据
@@ -229,7 +261,7 @@
             $('#tbody').html(snackL)
         }
 
-        
+
         /*图片-添加*/
         function picture_add(title, url) {
             var index = layer.open({

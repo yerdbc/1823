@@ -37,25 +37,25 @@ let getSnackByBrand=(req,res)=>{
     })
 }
 
-let getSnackByPage=(req,res)=>{
-    let page=req.body.page||1
-    let pageSize=req.body.pageSize||2
-    let result = {count:0,list:[]}
-    snackModel.find()
-    .then((data)=>{
-        result.count=data.length;
-        return snackModel.find().skip(Number((page-1)*pageSize)).limit(Number(pageSize))
-    })
-    .then((data)=>{
-        console.log(data)
-        result.lists=data
-        utils.sendRes(res,0,'get ok',result)
-    })
-    .catch((err)=>{
-        utils.log(err)
-        utils.sendRes(res,-1,err._message,null)
-    })
-}
+// let getSnackByPage=(req,res)=>{
+//     let page=req.body.page||1
+//     let pageSize=req.body.pageSize||2
+//     let result = {count:0,list:[]}
+//     snackModel.find()
+//     .then((data)=>{
+//         result.count=data.length;
+//         return snackModel.find().skip(Number((page-1)*pageSize)).limit(Number(pageSize))
+//     })
+//     .then((data)=>{
+//         console.log(data)
+//         result.lists=data
+//         utils.sendRes(res,0,'get ok',result)
+//     })
+//     .catch((err)=>{
+//         utils.log(err)
+//         utils.sendRes(res,-1,err._message,null)
+//     })
+// }
 
 let getSnackById=(req,res)=>{
     let{_id}=req.body
@@ -71,12 +71,19 @@ let getSnackById=(req,res)=>{
 }
 
 let getSnackByKw=(req,res)=>{
+    let page=req.body.page||1
+    let pageSize=req.body.pageSize||2
+    let result = {count:0,list:[]}
     let {keyword}=req.body
     let reg=new RegExp(keyword)
-    snackModel.find({$or:[{name:{$regex:reg}},{desc:{$regex:reg}}]})
+    snackModel.find({name:{$regex:reg}})
     .then((data)=>{
-        console.log(data)
-        utils.sendRes(res,0,'select ok',data)
+        result.count=data.length;
+        return snackModel.find({name:{$regex:reg}}).skip(Number((page-1)*pageSize)).limit(Number(pageSize))
+    })
+    .then((data)=>{
+        result.lists=data
+        utils.sendRes(res,0,'select ok',{data,result})
     })
     .catch((err)=>{
         utils.log(err)
@@ -112,5 +119,5 @@ let delSnack=(req,res)=>{
 }
 
 module.exports={
-    getSnack,addSnack,getSnackByBrand,getSnackByPage,getSnackById,getSnackByKw,updateSnack,delSnack
+    getSnack,addSnack,getSnackByBrand,getSnackById,getSnackByKw,updateSnack,delSnack
 }
