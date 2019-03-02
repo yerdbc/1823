@@ -138,7 +138,7 @@
     <script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
     <script type="text/javascript">
-        let rootpath = 'http://10.9.62.145:3000'
+        let rootpath = localStorage.getItem("ip")
         let pageSize = 2
         let page = 1
         let count = 0 //数据总数
@@ -194,10 +194,10 @@
 
         function sounima() {
             let keyword = $('#soulingshi').val();
-            console.log(keyword)
+            // console.log(keyword)
             $.ajax({
                 async: true,
-                url: "http://10.9.62.145:3000/admin/snack/getSnackByKw",
+                url: localStorage.getItem("ip")+"/admin/snack/getSnackByKw",
                 type: 'post', //请求的方式
                 data: {
                     keyword,
@@ -239,7 +239,7 @@
 						<td><input name="" type="checkbox" onclick="choseToDel('${data[index]._id}')" value=""></td>
 						<td>${data[index].name}</td>
 						<td>${data[index].brand}</td>
-						<td><a href="javascript:;" ><img src="http://10.9.62.145:3000${data[index].imgPath}" width="100" class="picture-thumb"
+						<td><a href="javascript:;" ><img src="${rootpath}${data[index].imgPath}" width="100" class="picture-thumb"
 								 ></a></td>
 						<td class="text-l" >${data[index].desc}</td>
 						<td class="text-c">${data[index].weight}g</td>
@@ -374,7 +374,7 @@
                 console.log(id);
                 $.ajax({
                     type: 'POST',
-                    url: 'http://10.9.62.145:3000/admin/snack/delSnack',
+                    url: localStorage.getItem("ip")+'/admin/snack/delSnack',
                     data: {
                         _id: id
                     },
@@ -424,7 +424,7 @@
             for (let i = 0; i < arr.length; i++) {
                 $.ajax({
                     type: 'POST',
-                    url: 'http://10.9.62.145:3000/admin/snack/delSnack',
+                    url: localStorage.getItem("ip")+'/admin/snack/delSnack',
                     data: {
                         _id: arr[i]
                     },

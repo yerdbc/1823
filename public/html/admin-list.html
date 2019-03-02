@@ -153,7 +153,7 @@
 
 		$.ajax({
 			async: true,
-			url: "http://10.9.62.146:3000/admin/administrator/getUser",
+			url: localStorage.getItem("ip")+"/admin/administrator/getUser",
 			type: 'post', //请求的方式
 			data: {}, //请求的数据
 			success: function (backdata) { //请求成功后返回的数据会封装在回调函数的第一个参数中
@@ -204,7 +204,7 @@
 			console.log(keyword)
 			$.ajax({
 				async: true,
-				url: "http://10.9.62.146:3000/admin/administrator/getUserByKw",
+				url: localStorage.getItem("ip")+"/admin/administrator/getUserByKw",
 				type: 'post', //请求的方式
 				data: {
 					keyword
