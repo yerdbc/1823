@@ -71,7 +71,6 @@
     <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
     <script src="../js/verificationCode.js"></script>
     <script>
-
         function namets() {
             if ($('#name').val()=="") {
                 $('#ts').html('账号不能为空')
@@ -90,7 +89,9 @@
             passts()
             $.ajax({
                 async: true,
-                url: "http://10.9.62.146:3000/admin/administrator/login",
+
+                url: localStorage.getItem("ip")+"/admin/administrator/login",
+
                 type: 'post', //请求的方式
                 data: {
                     'name': $('#name').val(),
