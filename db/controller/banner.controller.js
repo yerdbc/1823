@@ -71,12 +71,19 @@ let getBannerById=(req,res)=>{
 }
 
 let getBannerByKw=(req,res)=>{
+    let page=req.body.page||1
+    let pageSize=req.body.pageSize||2
+    let result = {count:0,list:[]}
     let {keyword}=req.body
     let reg=new RegExp(keyword)
-    bannerModel.find({$or:[{name:{$regex:reg}},{desc:{$regex:reg}}]})
+    bannerModel.find({name:{$regex:reg}})
     .then((data)=>{
-        console.log(data)
-        utils.sendRes(res,0,'select ok',data)
+        result.count=data.length;
+        return bannerModel.find({name:{$regex:reg}}).skip(Number((page-1)*pageSize)).limit(Number(pageSize))
+    })
+    .then((data)=>{
+        result.lists=data
+        utils.sendRes(res,0,'select ok',{data,result})
     })
     .catch((err)=>{
         utils.log(err)

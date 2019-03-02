@@ -89,7 +89,9 @@
             passts()
             $.ajax({
                 async: true,
+
                 url: localStorage.getItem("ip")+"/admin/administrator/login",
+
                 type: 'post', //请求的方式
                 data: {
                     'name': $('#name').val(),
