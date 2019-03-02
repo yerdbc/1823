@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({
 
 app.use('/public', express.static(path.join(__dirname, 'public')))
 const adminUser = require('./router/userRouter.js')
+
 const administrator = require('./router/administratorRouter.js')
 const adminBanner = require('./router/bannerRouter.js')
 const adminSnack = require('./router/snackRouter.js')
@@ -19,7 +20,7 @@ const adminUpload=require('./router/uploadRouter')
 app.use('/admin/administrator/', administrator)
 app.use('/admin/user/', adminUser)
 app.use('/admin/banner', adminBanner)
-app.use('/admin/snack', adminSnack)
+app.use('/admin/snack',  adminSnack)
 app.use('/admin/news',adminNews)
 app.use('/admin/upload',adminUpload)
 
