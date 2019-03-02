@@ -46,7 +46,7 @@ let getUser = (req, res) => {
     administratorModel.find()
         .then((data) => {
             utils.log(data);
-            utils.sendRes(res, 0, "ok", null)
+            utils.sendRes(res, 0, "ok", data)
         })
         .catch((err) => {
             utils.log(err)
@@ -87,9 +87,23 @@ let addUser = (req, res) => {
             utils.sendRes(res, -1, err._message, null)
         })
 }
+let getUserByKw=(req,res)=>{
+    let {keyword}=req.body
+    let reg=new RegExp(keyword)
+    administratorModel.find({name:{$regex:reg}})
+    .then((data)=>{
+        console.log(data)
+        utils.sendRes(res,0,'select ok',data)
+    })
+    .catch((err)=>{
+        utils.log(err)
+        utils.sendRes(res,-1,err._message,null)
+    })
+}
 module.exports = {
     login,
     getUser,
     getUserId,
-    addUser
+    addUser,
+    getUserByKw
 }
