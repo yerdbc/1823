@@ -71,26 +71,28 @@
     <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
     <script src="../js/verificationCode.js"></script>
     <script>
+        localStorage.setItem('ip', 'http://10.9.62.194:3000')
         function namets() {
-            if ($('#name').val()=="") {
+            if ($('#name').val() == "") {
                 $('#ts').html('账号不能为空')
                 return
             }
         }
+
         function passts() {
-            if ($('#pass').val()=="") {
+            if ($('#pass').val() == "") {
                 $('#ts').html('密码不能为空')
                 return
             }
         }
-    
+
         function login() {
             namets()
             passts()
             $.ajax({
                 async: true,
 
-                url: localStorage.getItem("ip")+"/admin/administrator/login",
+                url: localStorage.getItem("ip") + "/admin/administrator/login",
 
                 type: 'post', //请求的方式
                 data: {

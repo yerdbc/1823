@@ -85,11 +85,9 @@
                     <tr class="text-c">
                         <th width="40"><input name="" type="checkbox" value=""></th>
                         <th width="80">名称</th>
-                        <th width="100">品牌</th>
-                        <th width="200">封面</th>
+                        <th width="200">图片</th>
                         <th width="150">描述</th>
-                        <th width="80">质量</th>
-                        <th width="80">单价</th>
+
                         <th width="60">发布状态</th>
                         <th width="100">操作</th>
                     </tr>
@@ -137,7 +135,7 @@
     <script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
     <script type="text/javascript">
-        let rootpath = 'http://10.9.62.146:3000'
+        let rootpath = localStorage.getItem('ip');
         let pageSize = 2
         let page = 1
         let count = 0 //数据总数
@@ -196,7 +194,7 @@
             console.log(keyword)
             $.ajax({
                 async: true,
-                url: "http://10.9.62.146:3000/admin/banner/getBannerByKw",
+                url: localStorage.getItem('ip')+"/admin/banner/getBannerByKw",
                 type: 'post', //请求的方式
                 data: {
                     keyword,
@@ -237,22 +235,19 @@
 
 						<td><input name="" type="checkbox" onclick="choseToDel('${data[index]._id}')" value=""></td>
 						<td>${data[index].name}</td>
-						<td>${data[index].brand}</td>
-						<td><a href="javascript:;" ><img src="http://10.9.62.146:3000${data[index].imgPath}" width="100" class="picture-thumb"
+						<td><a href="javascript:;" ><img src="${rootpath}${data[index].imgPath}" width="100" class="picture-thumb"
 								 ></a></td>
 						<td class="text-l" >${data[index].desc}</td>
-						<td class="text-c">${data[index].weight}g</td>
-						<td>${data[index].price}元</td>
 						<td class="td-status"><span class="label label-success radius">已发布</span></td>
 						
 						<td class="td-manage"><a style="text-decoration:none" onClick="picture_stop(this,'10001')" href="javascript:;"
 							 title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> 
 							 
-							 <a style="text-decoration:none" class="ml-5"  onClick="picture_edit('修改食品信息','picture-edit.html','${data[index]._id}')" 
+							 <a style="text-decoration:none" class="ml-5"  onClick="banner_edit('修改轮播信息','banner-edit.html','${data[index]._id}')" 
 							 title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
 							 
 							 <a style="text-decoration:none" class="ml-5"
-                             onClick="picture_del(this,'${data[index]._id}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                             onClick="banner_del(this,'${data[index]._id}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
                              
 						</td>
 					</tr>`
@@ -357,23 +352,13 @@
             });
         }
 
-        /*图片-编辑*/
-        function picture_edit(title, url, id) {
-            var index = layer.open({
-                type: 2,
-                title: title,
-                content: url
-            });
-            layer.full(index);
-        }
-
         /*图片-删除*/
-        function picture_del(obj, id) {
+        function banner_del(obj, id) {
             layer.confirm('确认要删除吗？', function (index) {
                 console.log(id);
                 $.ajax({
                     type: 'POST',
-                    url: 'http://10.9.62.146:3000/admin/banner/delBanner',
+                    url: localStorage.getItem('ip')+'/admin/banner/delBanner',
                     data: {
                         _id: id
                     },
@@ -384,6 +369,7 @@
                             icon: 1,
                             time: 1000
                         });
+                        window.location.reload();
                     },
                     error: function (data) {
                         console.log(data.msg);
@@ -391,13 +377,38 @@
                 });
             });
         }
+        function datadel(obj, id) {
+            for (let i = 0; i < arr.length; i++) {
+                $.ajax({
+                    type: 'POST',
+                    url: localStorage.getItem('ip')+'/admin/banner/delBanner',
+                    data: {
+                        _id: arr[i]
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!', {
+                            icon: 1,
+                            time: 1000
+                        });
+                        window.location.reload();
+                    },
+                    error: function (data) {
+                        console.log(data.msg);
+                    },
+                });
+            }
+            
+
+        }
 
 
 
 
 
 
-        function picture_edit(title, url, id) {
+        function banner_edit(title, url, id) {
             localStorage.setItem('_id', id)
             //将id 存入localstorage  目的是跨页面传参
             var index = layer.open({
@@ -419,30 +430,7 @@
         }
 
 
-        function datadel(obj, id) {
-            for (let i = 0; i < arr.length; i++) {
-                $.ajax({
-                    type: 'POST',
-                    url: 'http://10.9.62.146:3000/admin/banner/delBanner',
-                    data: {
-                        _id: arr[i]
-                    },
-                    dataType: 'json',
-                    success: function (data) {
-                        $(obj).parents("tr").remove();
-                        layer.msg('已删除!', {
-                            icon: 1,
-                            time: 1000
-                        });
-                    },
-                    error: function (data) {
-                        console.log(data.msg);
-                    },
-                });
-            }
-            window.location.reload();
-
-        }
+ 
 
 
 
