@@ -37,7 +37,6 @@
                     <input type="text" class="input-text" value="" placeholder="" id="desc" name="">
                 </div>
             </div>
-		
 		<div class="row cl">
 			<label style="text-align: right" class="form-label col-xs-4 col-sm-2" >图片上传：</label>
 			<div class="formControls col-xs-8 col-sm-9">
@@ -57,7 +56,7 @@
 		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button onclick="addBanner()" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+				<button onclick="updateSnack()" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
 				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 			</div>
 		</div>
@@ -76,7 +75,7 @@
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script> 
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script> 
 <script type="text/javascript" src="lib/webuploader/0.1.5/webuploader.min.js"></script>
-
+<!-- <script type="text/javascript" src="../js/snack.js"></script>  -->
 <script type="text/javascript">
 function article_save(){
 	alert("刷新父级的时候会自动关闭弹层。")
@@ -84,59 +83,81 @@ function article_save(){
 }
 
 
-function addBanner() {
+
+let OL_Action_Root=localStorage.getItem("ip")
+
+
+let id=localStorage.getItem('_id')
+//根据当前的id 获取相关食品信息  写入到页面
+function getFoodData(){
+    $.post(OL_Action_Root+'/admin/banner/getBannerById',{_id:id},function(res){
+       if(res.err==0){
+           //修改页面的数据信息
+           $('#name').val(res.data[0].name)
+		   $('#desc').val(res.data[0].desc)
+       }
+    })
+}
+getFoodData()
+//上传图片获取相关的路径信息
+
+
+function updateSnack() {
     // alert("刷新父级的时候会自动关闭弹层。")
     // 
-    //添加新的食品信息
+	//添加新的食品信息
+	let _id = localStorage.getItem('_id');
     let data = {
+		_id:_id,
         name: $('#name').val(),
         imgPath: imgPath,
         desc: $('#desc').val(),
-    }
-    $.post(OL_Action_Root + '/admin/banner/addBanner', data, (res) => {
+	}
+	console.log
+    $.post(OL_Action_Root + '/admin/banner/updateBanner', data, (res) => {
         if (res.err === 0) {
             //关闭当前页面
             // layer_close()
             window.parent.location.reload();
 
         } else {
-            // alert(res.msg)
+			// alert(res.msg)
+			console.log(res.err);
+			
         }
     })
 }
 
 
-let OL_Action_Root = localStorage.getItem('ip');
-let imgPath = ''
-function addPicture() {
+function addPicture(){
 
-    let file = $("#filewrap")[0].files[0] //在文件域中选中的图片
-    console.log(file)
-    var formData = new FormData() //创建一个空的formdata对象
-    formData.append('hehe', file)
-    $.ajax({
-        url: OL_Action_Root + '/admin/upload/img',
-        type: 'POST',
-        data: formData,
-        cache: false, //图片上传不要缓存
-        contentType: false, // josn  urlecode
-        processData: false, // 不需要jq进行默认格式处理
-        success: function (data) {
+let file = $("#filewrap")[0].files[0] //在文件域中选中的图片
+console.log(file)
+var formData = new FormData() //创建一个空的formdata对象
+formData.append('hehe', file)
+$.ajax({
+	url: OL_Action_Root + '/admin/upload/img',
+	type: 'POST',
+	data: formData,
+	cache: false, //图片上传不要缓存
+	contentType: false, // josn  urlecode
+	processData: false, // 不需要jq进行默认格式处理
+	success: function (data) {
 
-            if (data.err == 0) {
-                alert("上传成功")
-                let imgurl = OL_Action_Root + data.data
-                $('img').attr('src', imgurl)
-                imgPath = data.data //获取图片的url信息
-            } else {
-                alert("上传失败")
-            }
-            console.log(data)
-        }
+		if (data.err == 0) {
+			alert("上传成功")
+			let imgurl = OL_Action_Root + data.data
+			$('img').attr('src', imgurl)
+			imgPath = data.data //获取图片的url信息
+		} else {
+			alert("上传失败")
+		}
+		console.log(data)
+	}
 
-    });
+});
 }
-	
+
 </script>
 </body>
 </html>
